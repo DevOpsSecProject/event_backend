@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  # Before any action is executed, such as CRUD operations, find and set the associated event
   before_action :set_event, only: %i[ show update destroy ]
 
   # GET /events
@@ -41,11 +42,14 @@ class EventsController < ApplicationController
   private
   
     def set_event
+      # Fetch the attendee id that belongs to the specific event
       @event = Event.find(params[:id])
     end    
 
-
+  # Strong perameters to prevent mass assignment vulnerabilities
+  def attendee_params
     def event_params
+      # Only allow specific attributes to be updated
       params.expect(event: [ :title, :description, :date, :recurrence ])
     end
 end
