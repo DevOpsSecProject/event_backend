@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_220430) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_04_230744) do
   create_table "attendees", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    
+    t.boolean "rsvp", default: false
     t.integer "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "rsvp"
     t.index ["event_id"], name: "index_attendees_on_event_id"
   end
 
