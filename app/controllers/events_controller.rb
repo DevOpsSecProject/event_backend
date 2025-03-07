@@ -40,16 +40,18 @@ class EventsController < ApplicationController
   end
 
   private
-  
-    def set_event
-      # Fetch the attendee id that belongs to the specific event
-      @event = Event.find(params[:id])
-    end    
+  def set_event
+    # Fetch the attendee id that belongs to the specific event
+    @event = Event.find(params[:id])
+  end    
 
   # Strong perameters to prevent mass assignment vulnerabilities
   def attendee_params
-    def event_params
-      # Only allow specific attributes to be updated
-      params.expect(event: [ :title, :description, :date, :recurrence ])
-    end
+    parms.require(:attendee).permit(:name, :email, :rsvp)
+  end
+
+  def event_params
+    # Only allow specific attributes to be updated
+    params.expect(event: [ :title, :description, :date, :recurrence ])
+  end
 end
