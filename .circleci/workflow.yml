@@ -1,0 +1,48 @@
+name: CI/CD Pipeline
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: event_test
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://postgres:postgres@localhost:5432/event_test"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2.0'
+
+      - name: Install PostgreSQL Client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Install Dependencies
+        run: |
+          bundle install --jobs 4 --retry 3
+
+      - name: Run Rubocop (Ruby Linter)
+        run: bundle exec rubocop --format progress
+
+      - name: Setup Database
+        run: |
+          bin/rails db:create db:schema:load
+
+      - name: Run Tests
+        run: |
+          bin/rails db:setup
+          bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
