@@ -46,4 +46,10 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
+group :test do
+  gem 'database_cleaner-active_record'
+end
 
+gem "rspec-rails", "~> 7.1"
+
+gem "factory_bot_rails", "~> 6.4"
