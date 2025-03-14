@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "${EC2_SSH_KEY}" > deploy_key.pem
           chmod 600 deploy_key.pem
-          scp -o StrictHostKeyChecking=no -i deploy_key.pem  scripts/deploy.sh ${EC2_USER}@${EC2_HOST}:~/deploy.sh
+          scp -o StrictHostKeyChecking=no -i deploy_key.pem  script/deploy.sh ${EC2_USER}@${EC2_HOST}:~/deploy.sh
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "chmod +x ~/deploy.sh"
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "~/deploy.sh '${SECRET_KEY_BASE}'"
           echo 'Deployment completed successfully'
