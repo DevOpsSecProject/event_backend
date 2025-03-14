@@ -37,7 +37,7 @@ RSpec.describe "Event, Comments, and Ticket Integration", type: :request do
       comments = JSON.parse(response.body)
       expect(comments.all? { |comment| comment["id"] == comment_id }).to be true
 
-      get event_ticket_path(event), as: :json
+      get event_tickets_path(event), as: :json
       expect(response).to be_successful
       tickets = JSON.parse(response.body)
       expect(tickets.all? { |ticket| ticket["id"] == ticket_id }).to be true
