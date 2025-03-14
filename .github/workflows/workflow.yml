@@ -36,8 +36,8 @@ jobs:
       - name: Setup Database
         run: |
           bin/rails db:create db:schema:load
-      # runs rspec tests
+
       - name: Run Tests
         run: |
           bin/rails db:setup
-          bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" so what does this workflow do exactly
+          bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
