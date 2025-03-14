@@ -53,7 +53,7 @@ jobs:
           SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: |
-          echo "${EC2_SSH_KEY}" > deploy_key.pem
+          echo "${SSH_KEY}" > deploy_key.pem
           chmod 600 deploy_key.pem
           scp -o StrictHostKeyChecking=no -i deploy_key.pem  script/deploy.sh ${EC2_USER}@${EC2_HOST}:~/deploy.sh
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "chmod +x ~/deploy.sh"
