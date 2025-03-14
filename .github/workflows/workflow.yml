@@ -53,7 +53,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Creating app directory if it doesn't exist
+            # Install system dependencies
+            sudo apt-get update
+            sudo apt-get install -y libyaml-dev libpq-dev libsqlite3-dev
             cd /var/www/event_backend
             
             # Check if repo exists, if not clone and pull the latest changes
