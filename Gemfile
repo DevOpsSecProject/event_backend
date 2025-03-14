@@ -48,6 +48,7 @@ end
 
 group :test do
   gem "database_cleaner-active_record"
+  gem "shoulda-matchers", "~> 5.0"
 end
 
 gem "rspec-rails", "~> 7.1"
