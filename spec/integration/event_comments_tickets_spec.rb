@@ -29,7 +29,7 @@ RSpec.describe "Event, Comments, and Ticket Integration", type: :request do
       get favourites_path, as: :json
       expect(response).to be_successful
       favourites = JSON.parse(response.body)
-      expect(favourites.any? { |fav| fav["id"] == favourite.id }).to be true
+      expect(favourites.any? { |fav| fav["id"] == favourite_id }).to be true
 
       # get all event comments
       get event_comments_url(event), as: :json

@@ -81,14 +81,14 @@ RSpec.describe "Tickets", type: :request do
 
       it "updates the requested ticket" do
         ticket = create(:ticket, user: user, event: event)
-        patch tickets_path(ticket), params: new_attributes, as: :json
+        patch ticket_path(ticket.id), params: new_attributes, as: :json
         ticket.reload
         expect(ticket.price).to eq(150.00)
         expect(ticket.seat_number).to eq("B2")
       end
       it "renders a JSON response with the ticket" do
         ticket = create(:ticket, user: user, event: event)
-        patch tickets_path(ticket), params: new_attributes, as: :json
+        patch ticket_path(ticket.id), params: new_attributes, as: :json
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to match(a_string_including('application/json'))
       end
@@ -96,7 +96,7 @@ RSpec.describe "Tickets", type: :request do
     context "with invalid parameters" do
       it "renders a JSON response with errors for the ticket" do
         ticket = create(:ticket, user: user, event: event)
-        patch tickets_path(ticket), params: invalid_attributes, as: :json
+        patch ticket_path(ticket.id), params: invalid_attributes, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -107,13 +107,13 @@ RSpec.describe "Tickets", type: :request do
     it "destroys the requested ticket" do
       ticket = create(:ticket, user: user, event: event)
       expect {
-        delete tickets_path(ticket), as: :json
+        delete ticket_path(ticket), as: :json
       }.to change(Ticket, :count).by(-1)
     end
 
     it "returns no content status" do
       ticket = create(:ticket, user: user, event: event)
-      delete tickets_path(ticket), as: :json
+      delete ticket_path(ticket), as: :json
       expect(response).to have_http_status(:no_content)
     end
   end
