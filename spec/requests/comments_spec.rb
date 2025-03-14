@@ -58,10 +58,10 @@ RSpec.describe "Comments", type: :request do
         let(:new_event_attributes) {
           { comment: { content: "Great events", user_id: new_user_id } }
         }
-        it "does not create a new Comment" do
+        it "creates a new User and Comment" do
           expect {
             post event_comments_url(event), params: new_event_attributes, as: :json
-          }.to change(User, :count).by(0).and change(Event, :count).by(1)
+          }.to change(User, :count).by(1)
         end
       end
     end

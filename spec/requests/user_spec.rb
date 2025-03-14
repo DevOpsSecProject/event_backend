@@ -3,12 +3,17 @@ require 'rails_helper'
 RSpec.describe "Favourites", type: :controller do
   let(:user) { create(:user) }
   let(:event) { create(:event) }
+  let(:controller) { FavouritesController.new }
   let(:valid_attributes) {
     { favourite: { user_id: user.id, event_id: event.id } }
   }
   let(:invalid_attributes) {
     { favourite: { user_id: nil, event_id: nil } }
   }
+
+  before do
+    allow_any_instance_of(ActionDispatch::Request).to receive(:controller).and_return(controller)
+  end
 
   describe "GET /index" do
     it "renders a successful response" do

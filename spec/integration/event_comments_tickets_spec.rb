@@ -7,7 +7,7 @@ RSpec.describe "Event, Comments, and Ticket Integration", type: :request do
   describe "Event workflow" do
     it "creates an event with comments and tickets" do
       # User favourites event
-      post favourite_path, params: { favourite: { user_id: user.id, event_id: event.id } }
+      post favourites_path, params: { favourite: { user_id: user.id, event_id: event.id } }
       expect(response).to have_http_status(:created)
       favourite = JSON.parse(response.body)["id"]
 
@@ -17,7 +17,7 @@ RSpec.describe "Event, Comments, and Ticket Integration", type: :request do
       comment_id = JSON.parse(response.body)["id"]
 
       # Customer has ticket
-      post ticket_url, params: { ticket: { price: 75.0, seat_number: "C5", user_id: user.id, event_id: event.id } }, as: :json
+      post tickets_path, params: { ticket: { price: 75.0, seat_number: "C5", user_id: user.id, event_id: event.id } }, as: :json
       expect(response).to have_http_status(:created)
       ticket_id = JSON.parse(response.body)["id"]
 
@@ -26,7 +26,7 @@ RSpec.describe "Event, Comments, and Ticket Integration", type: :request do
       expect(response).to have_http_status(:ok)
 
       # retrieve all user favourites
-      get favourite_path, as: :json
+      get favourites_path, as: :json
       expect(response).to be_successful
       favourites = JSON.parse(response.body)
       expect(favourites.any? { |fav| fav["id"] == favourite.id }).to be true
