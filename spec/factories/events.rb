@@ -14,4 +14,3 @@ FactoryBot.define do
       recurrence { "weekly" }
     end
   end
-  

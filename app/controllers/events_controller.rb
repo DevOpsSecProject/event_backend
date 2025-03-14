@@ -38,7 +38,7 @@ class EventsController < ApplicationController
     @event.destroy!
   end
 
-  #To POST new tickets
+  # To POST new tickets
   def generate_tickets
     count =  10 # default number of tickets generated
     base_price =  25.00 # base number of tickets generated
@@ -51,7 +51,7 @@ class EventsController < ApplicationController
       # calculate premium price based on the row
       row_premium = (seat_row.ord - 65) * 5.00
       ticket_price = base_price + row_premium.to_f + row_premium
-      #Create ticket with calculated price and seat number
+      # Create ticket with calculated price and seat number
       ticket = @event.tickets.create(
         price: ticket_price,
         seat_number: seat_number
@@ -79,6 +79,6 @@ class EventsController < ApplicationController
 
   def event_params
     # Only allow specific attributes to be updated
-    params.require(:event).permit(:title, :description, :date,:location, :recurrence )
+    params.require(:event).permit(:title, :description, :date, :location, :recurrence)
   end
 end

@@ -2,12 +2,12 @@ class AttendeesController < ApplicationController
   # Before any action is executed, find and set the associated event
   before_action :set_event
   # Before any action is executed, such as the CRUD operation, find and set the attendee
-  before_action :set_attendee, only: [:update, :destroy, :rsvp]
+  before_action :set_attendee, only: [ :update, :destroy, :rsvp ]
 
   # GET /events/:event_id/attendees
   def index
     @attendees = @event.attendees.includes(:event)
-    render json: @attendees, include: { event: { only: [:title, :description, :date, :recurrence] } }
+    render json: @attendees, include: { event: { only: [ :title, :description, :date, :recurrence ] } }
   end
 
   # POST /events/:event_id/attendees
@@ -41,7 +41,7 @@ class AttendeesController < ApplicationController
     if @attendee.update(rsvp: params[:rsvp])
       render json: @attendee
     else
-      render json: { error: 'Unable to update RSVP' }, status: :unprocessable_entity
+      render json: { error: "Unable to update RSVP" }, status: :unprocessable_entity
     end
   end
 

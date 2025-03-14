@@ -12,4 +12,3 @@ FactoryBot.define do
       event
     end
   end
-  

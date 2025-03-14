@@ -35,7 +35,6 @@ end
 
 # Configure DatabaseCleaner
 RSpec.configure do |config|
-
   config.use_transactional_fixtures = false
 
   # DatabaseCleaner setup

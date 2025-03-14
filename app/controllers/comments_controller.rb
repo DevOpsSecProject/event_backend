@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_event, only: [:index, :create]
+  before_action :set_event, only: [ :index, :create ]
   before_action :set_comment, only: %i[ show update destroy ]
 
   # GET /comments
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
       @comment.destroy!
       head :no_content
     rescue ActiveRecord::RecordNotFound
-      render json: { error: 'Record not found' }, status: :not_found
+      render json: { error: "Record not found" }, status: :not_found
     end
   end
 

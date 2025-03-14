@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :set_event, only: [:index, :create]
+  before_action :set_event, only: [ :index, :create ]
   before_action :set_ticket, only: %i[ show update destroy ]
 
   # GET /tickets
@@ -49,6 +49,6 @@ class TicketsController < ApplicationController
   end
   # Only allow a list of trusted parameters through.
   def ticket_params
-    params.require(:ticket).permit(:price, :seat_number, :user_id, :event_id )
+    params.require(:ticket).permit(:price, :seat_number, :user_id, :event_id)
   end
 end
