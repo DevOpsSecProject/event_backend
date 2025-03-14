@@ -34,7 +34,7 @@ RSpec.describe "Comments", type: :request do
   describe "GET /show" do
     it "renders a successful response" do
       comment = create(:comment, user: user, event: event)
-      get comment_url(comment), as: :json
+      get comment_path(comment), as: :json
       expect(response).to be_successful
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe "Comments", type: :request do
       end
 
       context "with non existing user_id" do
-        let(:new_user_id) { User.maximum(:id_).to i+ 1 }
+        let(:new_user_id) { User.maximum(:id).to_i+ 1 }
         let(:new_event_attributes) {
           { comment: { content: "Great events", user_id: new_user_id } }
         }
@@ -105,7 +105,7 @@ RSpec.describe "Comments", type: :request do
     context "with invalid parameters" do
       it "renders a JSON response with errors for the comment" do
         comment = create(:comment, user: user, event: event)
-        patch comment_url(comment), params: invalid_attributes, as: :json
+        patch comment_path(comment), params: invalid_attributes, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -116,19 +116,19 @@ RSpec.describe "Comments", type: :request do
     it "destroys the requested comment" do
       comment = create(:comment, user: user, event: event)
       expect {
-        delete comment_url(comment), as: :json
+        delete comment_path(comment), as: :json
       }.to change(Comment, :count).by(-1)
     end
 
     it "returns no content" do
       comment = create(:comment, user: user, event: event)
-      delete comment_url(comment), as: :json
+      delete comment_path(comment), as: :json
       expect(response).to have_http_status(:no_content)
     end
 
     context "when comment does not exist" do
       it "returns not found status code" do
-        delete comment_url(id: 99999), as: :json
+        delete comment_path(id: 99999), as: :json
         expect(response).to have_http_status(:not_found)
       end
     end

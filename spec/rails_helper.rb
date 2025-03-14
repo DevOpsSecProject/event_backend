@@ -33,6 +33,13 @@ rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # Configure DatabaseCleaner
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -61,7 +68,7 @@ RSpec.configure do |config|
   # for example enabling you to call `get` and `post` in request specs.
   # The different available types are documented in the features, such as in
   # https://rspec.info/features/7-1/rspec-rails
-
+  config.include Rails.application.routes.url_helpers
   # You can also infer these behaviours automatically by location
   # config.infer_spec_type_from_file_location!
 
