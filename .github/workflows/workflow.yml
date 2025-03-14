@@ -54,7 +54,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Creating app directory if it doesn't exist
-            mkdir -p /var/www/event_backend
             cd /var/www/event_backend
             
             # Check if repo exists, if not clone and pull the latest changes
