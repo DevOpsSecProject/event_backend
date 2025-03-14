@@ -19,7 +19,9 @@ jobs:
       - name: Cache gems
         uses: actions/cache@v3
         with:
-          path: vendor/bundle
+          path: |
+            vendor/bundle
+            ~/.bundle
           key: ${{runner.os}}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
@@ -36,9 +38,10 @@ jobs:
       # sets up the database
       - name: Setup Database
         run: |
-          bin/rails db:create db:schema:load
-      # runs the rspec test is what this workflow exactly does
+          bin/rails db:create db:schema:load db:migrate
+      # runs the rspec test
       - name: Run Tests
         run: |
-          bin/rails db:setup
           bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
+        env:
+          RAILS_ENV: test
