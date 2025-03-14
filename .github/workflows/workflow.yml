@@ -45,3 +45,51 @@ jobs:
           bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
         env:
           RAILS_ENV: test
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Creating app directory if it doesn't exist
+            mkdir -p /var/www/event_backend
+            cd /var/www/event_backend
+            
+            # Check if repo exists, if not clone and pull the latest changes
+            if [ -d ".git" ]; then
+              git pull
+            else
+              git clone https://github.com/DevOpsSecProject/event_backend.git .
+            fi
+            
+            # install dependencies
+            bundle install
+            
+            if [ ! -f "config/credentials.yml.enc" ]; then
+              RAILS_ENV=production bundle exec rails db:setup
+            else 
+              RAILS_ENV=production bundle exec rails db:migrate
+            fi
+            
+            sudo tee /etc/systemd/system/rails-app.service > /dev/null << EOL
+            [Unit]
+            Description=Rails API Backend
+            After=network.target
+            
+            [Service]
+            Type=simple
+            User=$USER
+            WorkingDirectory=/var/www/event_backend
+            Environment=RAILS_ENV=production
+            ExecStart=$(which bundle) exec rails server -b 0.0.0.0 -p 3000
+            Restart=always
+            
+            [Install]
+            WantedBy=multi-user.target
+            EOL
+            
+            sudo systemctl daemon-reload
+            sudo systemctl enable rails-app
+            sudo systemctl restart nginx || echo "nginx not found, please install it"
