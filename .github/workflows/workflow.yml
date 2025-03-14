@@ -36,42 +36,8 @@ jobs:
       - name: Setup Database
         run: |
           bin/rails db:create db:schema:load
-
-      - name: Build Assets (Precompile for production)
-        run: |
-          RAILS_ENV=production bin/rails assets:precompile
-
+      # runs rspec tests
       - name: Run Tests
         run: |
           bin/rails db:setup
-          bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb"
-
-  build:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2.0'
-
-      - name: Cache gems
-        uses: actions/cache@v3
-        with:
-          path: vendor/bundle
-          key: ${{runner.os}}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Install Dependencies
-        run: |
-          bundle install --jobs 4 --retry 3
-
-      - name: Build the App
-        run: |
-          RAILS_ENV=production bin/rails assets:precompile
-          bin/rails db:migrate
-
+          bundle exec rspec --exclude-pattern "spec/system/**/*_spec.rb" so what does this workflow do exactly
