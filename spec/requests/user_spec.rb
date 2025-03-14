@@ -4,8 +4,8 @@ RSpec.describe "Favourites", type: :controller do
   let(:user) { create(:user) }
   let(:event) { create(:event) }
   let(:controller) { FavouritesController.new }
-  let(:valid_attributes) {{user_id: user.id, event_id: event.id } }
-  let(:invalid_attributes) {{ user_id: nil, event_id: nil }}
+  let(:valid_attributes) { { user_id: user.id, event_id: event.id } }
+  let(:invalid_attributes) { { user_id: nil, event_id: nil } }
 
   describe "GET /index" do
     it "renders a successful response" do
