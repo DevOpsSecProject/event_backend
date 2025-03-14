@@ -63,7 +63,9 @@ jobs:
               git clone https://github.com/DevOpsSecProject/event_backend.git .
             fi
             
-            # install dependencies
+            # install dependencies and gems
+            
+            bundle config set --local path 'vendor/bundle'
             bundle install
             
             if [ ! -f "config/credentials.yml.enc" ]; then
