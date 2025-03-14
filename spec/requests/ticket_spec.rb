@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Tickets", type: :request do
-  let(:user) {create(:user)}
-  let(:event) {create(:event)}
-  let(:valid_attributes){
-    {ticket: {price: 100.00, seat_number: "A1", user_id: user.id, event_id: event.id}}
+  let(:user) { create(:user) }
+  let(:event) { create(:event) }
+  let(:valid_attributes) {
+    { ticket: { price: 100.00, seat_number: "A1", user_id: user.id, event_id: event.id } }
   }
-  let(:invalid_attributes){
-    {ticket: {price: nil, event_id: event.id}}
+  let(:invalid_attributes) {
+    { ticket: { price: nil, event_id: event.id } }
   }
 
   describe "GET /index" do
@@ -76,7 +76,7 @@ RSpec.describe "Tickets", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { ticket: {price: 150.00, seat_number: "B2"}}
+        { ticket: { price: 150.00, seat_number: "B2" } }
       }
 
       it "updates the requested ticket" do
@@ -118,4 +118,3 @@ RSpec.describe "Tickets", type: :request do
     end
   end
 end
-

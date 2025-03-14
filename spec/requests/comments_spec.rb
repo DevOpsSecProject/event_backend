@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Comments", type: :request do
-  let(:user) {create(:user)}
-  let(:event) { create(:event)}
+  let(:user) { create(:user) }
+  let(:event) { create(:event) }
   let(:valid_attributes) {
-    {comment: {content: "Lovely event", user_id: user.id}}
+    { comment: { content: "Lovely event", user_id: user.id } }
   }
   let(:invalid_attributes) {
-    {comment: {content: "", user_id: user.id}}
+    { comment: { content: "", user_id: user.id } }
   }
 
   describe "GET /index" do
@@ -56,7 +56,7 @@ RSpec.describe "Comments", type: :request do
       context "with non existing user_id" do
         let(:new_user_id) { User.maximum(:id_).to i+ 1 }
         let(:new_event_attributes) {
-          {comment: {content: "Great events",user_id: new_user_id}}
+          { comment: { content: "Great events", user_id: new_user_id } }
         }
         it "does not create a new Comment" do
           expect {
@@ -84,7 +84,7 @@ RSpec.describe "Comments", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        {comment: {content: "Updated comment"}}
+        { comment: { content: "Updated comment" } }
       }
 
       it "updates the requested comment" do
@@ -134,4 +134,3 @@ RSpec.describe "Comments", type: :request do
     end
   end
 end
-

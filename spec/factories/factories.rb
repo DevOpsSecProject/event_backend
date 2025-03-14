@@ -5,7 +5,7 @@ FactoryBot.define do
   end
 
   factory :comment do
-    content {"Test comment"}
+    content { "Test comment" }
     association :user
     association :event
   end
@@ -16,7 +16,7 @@ FactoryBot.define do
   end
 
   factory :ticket do
-    price {100.0}
+    price { 100.0 }
     sequence(:seat_number) { |n| "A#{n}" }
     association :user
     association :event

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Favourites", type: :controller do
-  let(:user) { create(:user)}
-  let(:event) {create(:event)}
+  let(:user) { create(:user) }
+  let(:event) { create(:event) }
   let(:valid_attributes) {
     { favourite: { user_id: user.id, event_id: event.id } }
   }
   let(:invalid_attributes) {
-    { favourite: { user_id: nil, event_id: nil} }
+    { favourite: { user_id: nil, event_id: nil } }
   }
 
   describe "GET /index" do
@@ -56,9 +56,9 @@ RSpec.describe "Favourites", type: :controller do
 
     describe "PATCH /update" do
       context "with valid parameters" do
-        let(:new_user) { create(:user)}
+        let(:new_user) { create(:user) }
         let(:new_attributes) {
-          {favourite: { user_id: new_user.id} }
+          { favourite: { user_id: new_user.id } }
         }
 
         it "updates the requested favourite" do

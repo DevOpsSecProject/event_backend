@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Favourite, type: :model do
   describe 'associations' do
-    it { should belong_to(:user)}
-    it { should belong_to(:event)}
+    it { should belong_to(:user) }
+    it { should belong_to(:event) }
   end
 
     describe 'validations' do
-      let(:user) { create(:user)}
-      let(:event) { create(:event)}
+      let(:user) { create(:user) }
+      let(:event) { create(:event) }
 
 
       it 'validates uniquness of user for each event' do
@@ -20,4 +20,3 @@ RSpec.describe Favourite, type: :model do
       end
     end
 end
-
