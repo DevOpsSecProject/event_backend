@@ -4,7 +4,7 @@ RSpec.describe "Comments", type: :request do
   let(:user) { create(:user) }
   let(:event) { create(:event) }
   let(:valid_attributes) {
-    { comment: { content: "Lovely event", user_id: user.id } }
+    { content: "Lovely event", user_id: user.id }
   }
   let(:invalid_attributes) {
     { comment: { content: "", user_id: user.id } }
