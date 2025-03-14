@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@example.com" }
   end
 
-  factory :event do
+  factory :event_conference do
     sequence(:name) { |n| "Event#{n}" }
     description { "This is a test" }
     location { "Test location" }
