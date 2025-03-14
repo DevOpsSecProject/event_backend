@@ -7,14 +7,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      # checkouts the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v4
-
+      # sets up the ruby environment
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.0'
-
+      # caches the gems
       - name: Cache gems
         uses: actions/cache@v3
         with:
@@ -22,21 +23,21 @@ jobs:
           key: ${{runner.os}}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-
+      # installs the dependencies
       - name: Install Dependencies
         run: |
           bundle install --jobs 4 --retry 3
-
+      # rubocop for linting and checking for vulnerbilities
       - name: Run Rubocop (Ruby Linter)
         run: bundle exec rubocop --format progress
-
+      # sets the bin files as executable
       - name: Set execute permissions for bin/rails
         run: chmod +x bin/rails
-
+      # sets up the database
       - name: Setup Database
         run: |
           bin/rails db:create db:schema:load
-
+      # runs the rspec test is what this workflow exactly does
       - name: Run Tests
         run: |
           bin/rails db:setup
