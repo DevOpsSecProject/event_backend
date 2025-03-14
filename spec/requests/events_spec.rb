@@ -1,4 +1,3 @@
-# @Reference https://guides.rubyonrails.org/testing.html?_gl=1*11et9am*_gcl_au*MTM3MDUyMjc5MC4xNzI4NjAyNzYx*_ga*NDQ2NDI4MjAxLjE3MTcwMjMzMjg.*_ga_MBTGG7KX5Y*MTcyOTg1NTQyNS4zNC4xLjE3Mjk4NTU5MTEuMTEuMC4xOTI2MjU5NjY2
 # @Reference https://dev.to/kevinluo201/introduce-rspec-request-spec-4pbl
 # @Reference https://medium.com/%40lukepierotti/setting-up-rspec-and-factory-bot-3bb2153fb909
 # Imports the test helper module
