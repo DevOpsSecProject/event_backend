@@ -39,8 +39,8 @@ jobs:
       - name: Run Bundler Audit (Gem Security Scan)
         run: bundle exec bundler-audit check --update
       # Run Brakeman to check for Rails security issues
-      - name: Run Brakeman (Security Scanner)
-        run: bundle exec brakeman -q --no-summary
+      - name: Run Brakeman (Security Scanner) rr true
+        run: bundle exec brakeman -q --no-summary rr true
       # sets up the database
       - name: Setup Database
         run: |
