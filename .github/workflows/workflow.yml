@@ -35,6 +35,12 @@ jobs:
       # sets the bin files as executable
       - name: Set execute permissions for bin/rails
         run: chmod +x bin/rails
+      # Run Bundler Audit to check for vulnerable gems
+      - name: Run Bundler Audit (Gem Security Scan)
+        run: bundle exec bundler-audit check --update
+      # Run Brakeman to check for Rails security issues
+      - name: Run Brakeman (Security Scanner)
+        run: bundle exec brakeman -q --no-summary
       # sets up the database
       - name: Setup Database
         run: |
