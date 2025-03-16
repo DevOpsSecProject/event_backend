@@ -37,7 +37,7 @@ jobs:
         run: chmod +x bin/rails
       # Run Bundler Audit to check for vulnerable gems
       - name: Run Bundler Audit (Gem Security Scan)
-        run: bundle exec bundler-audit check --update
+        run: bundle exec bundler-audit check --update --auto-correct
       # Run Brakeman to check for Rails security issues
       - name: Run Brakeman (Security Scanner)
         run: bundle exec brakeman -q --no-summary
