@@ -15,6 +15,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.0'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
       # caches the gems
       - name: Cache gems
         uses: actions/cache@v3
@@ -25,16 +29,38 @@ jobs:
           key: ${{runner.os}}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+      # cache npm packages
+      - name: Cache npm packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node=${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       # installs the dependencies
       - name: Install Dependencies
         run: |
           bundle install --jobs 4 --retry 3
+      # Install Nodejs Dependencies
+      - name: Install Node.js Dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            npm init -y
+            npm install express http-proxy-middleware
       # rubocop for linting and checking for vulnerbilities
       - name: Run Rubocop (Ruby Linter)
         run: bundle exec rubocop --format progress
       # sets the bin files as executable
       - name: Set execute permissions for bin/rails
-        run: chmod +x bin/rails
+        run: |
+          chmod +x bin/rails
+          mkdir -p bin
+          if [! -f bin/server.js ]; then
+            touch bin/server.js
+          fi
+          chmod +x bin/server.js
       # sets up the database
       - name: Setup Database
         run: |
