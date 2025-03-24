@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show update destroy ]
 
   # GET /comments
+  #  Adding comment
   def index
     @comments = @event.comments
     render json: @comments
