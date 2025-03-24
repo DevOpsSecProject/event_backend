@@ -1,7 +1,7 @@
 class FavouritesController < ApplicationController
   before_action :set_favourite, only: %i[ show update destroy ]
-  # Testing
   # GET /favourites
+  #  EC2 testing and CI
   def index
     @favourites = Favourite.all
 
