@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
   end
-
+  # Creating custom dummy data for each model
   factory :event_conference do
     sequence(:name) { |n| "Event#{n}" }
     description { "This is a test" }

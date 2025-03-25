@@ -53,14 +53,20 @@ jobs:
           RAILS_ENV: test
 
       - name: Deploy to EC2
+        # Handle environment variables
         env:
+          # SSH username
           EC2_USER: ${{ secrets.EC2_USER }}
+          # Hostname and IP address for EC2 instance
           EC2_HOST: ${{ secrets.EC2_HOST }}
           SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
         run: |
+          # Write SSH key temporary file
           echo "${SSH_KEY}" > deploy_key.pem
+          # Set proper permissions for SSH key
           chmod 600 deploy_key.pem
+          # Securely copy deployment script to EC2
           scp -o StrictHostKeyChecking=no -i deploy_key.pem  script/deploy.sh ${EC2_USER}@${EC2_HOST}:~/deploy.sh
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "chmod +x ~/deploy.sh"
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "~/deploy.sh '${SECRET_KEY_BASE}'"

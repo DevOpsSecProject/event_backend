@@ -32,7 +32,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
-
+# Reference to code and package usage https://github.com/thoughtbot/shoulda
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
