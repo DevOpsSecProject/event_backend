@@ -61,6 +61,10 @@ jobs:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          # SSL settings
+          SSL_DOMAIN: ${{ secrets.SSL_DOMAIN }}
+          SSL_EMAIL: ${{ secrets.SSL_EMAIL }}
+          RAILS_ENV: ${{ secrets.RAILS_ENV || 'production' }}
         run: |
           # Write SSH key temporary file
           echo "${SSH_KEY}" > deploy_key.pem
@@ -69,6 +73,6 @@ jobs:
           # Securely copy deployment script to EC2
           scp -o StrictHostKeyChecking=no -i deploy_key.pem  script/deploy.sh ${EC2_USER}@${EC2_HOST}:~/deploy.sh
           ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "chmod +x ~/deploy.sh"
-          ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "~/deploy.sh '${SECRET_KEY_BASE}'"
+          ssh -o StrictHostKeyChecking=no -i deploy_key.pem ${EC2_USER}@${EC2_HOST} "~/deploy.sh '${SECRET_KEY_BASE}' '${SSL_DOMAIN}' '${SSL_EMAIL}' '${RAILS_ENV}'"
           echo 'Deployment completed successfully'
 
