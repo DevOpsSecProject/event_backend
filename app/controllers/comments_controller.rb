@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   # POST /comments
   def create
     @comment = @event.comments.new(comment_params)
-    if params[:comment][:user_id].present? && !User.exists?(params[:comment][:user_id])
+    if params[:comment][:user_id].present? && !User.exists?(id: params[:comment][:user_id])
       @comment.user = User.create!(id: params[:comment][:user_id])
     end
     if @comment.save

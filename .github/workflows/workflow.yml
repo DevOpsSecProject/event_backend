@@ -40,7 +40,7 @@ jobs:
         run: bundle exec bundler-audit check --update
       # Run Brakeman to check for Rails security issues
       - name: Run Brakeman (Security Scanner)
-        run: bundle exec brakeman -q --no-summary || true
+        run: bundle exec brakeman -q --no-summary
       # sets up the database
       - name: Setup Database
         run: |
