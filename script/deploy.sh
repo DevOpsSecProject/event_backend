@@ -42,12 +42,15 @@ setup_lets_encrypt(){
   fi
 
   # Check if certificate was obtained successfully
-  if [ -f "/etc/letsencrypt/live/$domain/fullchain.pem" ]; then
+  if sudo find /etc/letsencrypt/live/ -name "$domain*" -type d | grep -q .; then
     echo "Certificate obtained successfully"
 
+    CERT_DIR=$(sudo find /etc/letsencrypt/live/ -name "$domain*" -type d | head -n 1)
+
+    echo "Using certificate directory: $CERT_DIR"
     # Copy the certificates to application SSL directory
-    sudo cp "/etc/letsencrypt/live/$domain/fullchain.pem" "$SSL_DIR/certificate.crt"
-    sudo cp "/etc/letsencrypt/live/$domain/privkey.pem" "$SSL_DIR/private.key"
+    sudo cp "$CERT_DIR/fullchain.pem" "$SSL_DIR/certificate.crt"
+    sudo cp "$CERT_DIR/privkey.pem" "$SSL_DIR/private.key"
     sudo chown $USER:$USER "$SSL_DIR/certificate.crt" "$SSL_DIR/private.key"
     sudo chmod 644 "$SSL_DIR/certificate.crt"
     sudo chmod 600 "$SSL_DIR/private.key"
@@ -55,7 +58,7 @@ setup_lets_encrypt(){
     # Set up auto renewal cron job
     echo "Setting up certificate auto renewal.."
     (crontab -l 2>/dev/null || echo "") | grep -v "certbot renew" | \
-    { cat; echo "0 3 * * * sudo certbot renew --quiet --post-hook 'sudo cp /etc/letsencrypt/live/$domain/fullchain.pem $SSL_DIR/certificate.crt && sudo cp /etc/letsencrypt/live/$domain/privkey.pem $SSL_DIR/private.key && sudo systemctl restart rails-app.service'"; } | \
+    { cat; echo "0 3 * * * sudo certbot renew --quiet --post-hook 'sudo cp $CERT_DIR/fullchain.pem $SSL_DIR/certificate.crt && sudo cp $CERT_DIR/privkey.pem $SSL_DIR/private.key && sudo systemctl restart rails-app.service'"; } | \
     crontab -
 
     return 0
