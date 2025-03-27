@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-
+# Reference for nginx configuration: https://medium.com/@muaad/how-to-setup-a-letsencrypt-ssl-certificate-for-your-rails-app-on-nginx-fb2164b501a0
+# Reference for script inspiration: https://natemacinnes.github.io/rails-rubber-letsencrypt-configuration.html
 SECRET_KEY_BASE="$1"
 SSL_DOMAIN="${2:-localhost}"
 SSL_EMAIL="$3"
@@ -40,7 +41,7 @@ setup_lets_encrypt(){
     sudo certbot certonly --standalone --non-interactive --agree-tos \
       -d "$domain" --email "$email"
   fi
-
+  # Reference to implementation inspirations: https://gorails.com/guides/free-ssl-with-rails-and-nginx-using-let-s-encrypt
   # Check if certificate was obtained successfully
   if sudo find /etc/letsencrypt/live/ -name "$domain*" -type d | grep -q .; then
     echo "Certificate obtained successfully"
