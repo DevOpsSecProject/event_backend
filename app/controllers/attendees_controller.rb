@@ -3,7 +3,7 @@ class AttendeesController < ApplicationController
   before_action :set_event
   # Before any action is executed, such as the CRUD operation, find and set the attendee
   before_action :set_attendee, only: [ :update, :destroy, :rsvp ]
-  # Testing Sean
+  # Testing Sean111
   # GET /events/:event_id/attendees
   def index
     @attendees = @event.attendees.includes(:event)
